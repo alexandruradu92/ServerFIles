@@ -1,0 +1,39 @@
+{
+  
+ "adminInterface":"192.168.2.28:4985",
+ "log":["CRUD+", "REST+", "Changes+", "Attach+"],
+
+ "databases": {
+    
+	"couchbaseevents": 
+	{
+      "server": "http://192.168.2.28:8091",
+
+	      "bucket": "couchbaseevents",
+      
+		"sync":`
+      		  function(doc, oldDoc) {
+        		  channel(doc._id);
+          		access(doc.user_id, doc._id);
+      			  }
+     			 `,
+ 
+	     "users": { "GUEST": { "disabled": true } }
+    
+	}
+ ,
+	"simple-login": 
+	{
+           	"server": "http://192.168.2.28:8091",
+		"bucket": "simple-login",
+     		 "users": { "GUEST": { "disabled": true } },
+     		 "sync": `
+      		  function(doc, oldDoc) {
+        		  channel(doc._id);
+          		access(doc.user_id, doc._id);
+      			  }
+     			 `
+    	} 
+  }
+
+}
